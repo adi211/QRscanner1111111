@@ -14,10 +14,13 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class SingUpActivity extends AppCompatActivity {
-    private EditText TextEmailReg,TextPassReg;
+    private EditText TextEmailReg,TextPassReg,NameReg,IdReg;
     private FirebaseAuth firebaseAuth;
+    DatabaseReference ref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,28 +31,40 @@ public class SingUpActivity extends AppCompatActivity {
         TextPassReg=(EditText) findViewById(R.id.TextPassReg);
         firebaseAuth=FirebaseAuth.getInstance();
 
+        NameReg=(EditText) findViewById(R.id.NameReg);
+        IdReg=(EditText) findViewById(R.id.IdReg);
+        ref=FirebaseDatabase.getInstance().getReference("Users");
+
 
     }
-    public void buttonSingUp_click(View v){
-        final ProgressDialog progressDialog=ProgressDialog.show(SingUpActivity.this,"Please wait...","Procassing...",true);
-        (firebaseAuth.createUserWithEmailAndPassword(TextEmailReg.getText().toString(),TextPassReg.getText().toString()))
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        progressDialog.dismiss();
+    public void buttonSingUp_click(View v) {
+        if (!(IdReg.getText().toString().isEmpty() && NameReg.getText().toString().isEmpty())) {
+            final ProgressDialog progressDialog = ProgressDialog.show(SingUpActivity.this, "Please wait...", "Procassing...", true);
+            (firebaseAuth.createUserWithEmailAndPassword(TextEmailReg.getText().toString(), TextPassReg.getText().toString()))
+                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            progressDialog.dismiss();
 
-                        if (task.isSuccessful()) {
-                            Toast.makeText(SingUpActivity.this, "SingUp Successful", Toast.LENGTH_LONG).show();
-                            Intent i = new Intent(SingUpActivity.this, loginActivity.class);
-                            startActivity(i);
+                            if (task.isSuccessful()) {
+                                String id=ref.push().getKey();
+                                Users user=new Users(id,TextEmailReg.getText().toString(),TextPassReg.getText().toString(),IdReg.getText().toString(),NameReg.getText().toString());
+                                ref.child(id).setValue(user);
+
+                                Toast.makeText(SingUpActivity.this, "SingUp Successful", Toast.LENGTH_LONG).show();
+                                Intent i = new Intent(SingUpActivity.this, loginActivity.class);
+                                startActivity(i);
+
+
+                            } else {
+                                Log.e("Error", task.getException().toString());
+                                Toast.makeText(SingUpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            }
                         }
-                        else {
-                            Log.e("Error",task.getException().toString());
-                            Toast.makeText(SingUpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
+                    });
+        }
     }
+
 
 }
 

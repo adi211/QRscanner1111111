@@ -7,10 +7,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class MainActivity extends AppCompatActivity {
 
-    public static TextView resultTV;
+    public static TextView resultTV,tv;
     Button scan_btn;
+    private FirebaseAuth firebaseAuth;
+    String a;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -18,6 +22,11 @@ public class MainActivity extends AppCompatActivity {
 
         resultTV=(TextView)findViewById(R.id.result_text);
         scan_btn=(Button) findViewById(R.id.btn_scan);
+        tv=(TextView)findViewById(R.id.textView5);
+        firebaseAuth=FirebaseAuth.getInstance();
+
+        a=firebaseAuth.getCurrentUser().getEmail();
+        tv.setText(a);
 
         scan_btn.setOnClickListener(new View.OnClickListener() {
             @Override

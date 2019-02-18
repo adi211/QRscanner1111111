@@ -36,9 +36,10 @@ public class SingUpActivity extends AppCompatActivity {
         ref=FirebaseDatabase.getInstance().getReference("Users");
 
 
+
     }
     public void buttonSingUp_click(View v) {
-        if (!(IdReg.getText().toString().isEmpty() && NameReg.getText().toString().isEmpty())) {
+        if (!(IdReg.getText().toString().isEmpty() || NameReg.getText().toString().isEmpty())) {
             final ProgressDialog progressDialog = ProgressDialog.show(SingUpActivity.this, "Please wait...", "Procassing...", true);
             (firebaseAuth.createUserWithEmailAndPassword(TextEmailReg.getText().toString(), TextPassReg.getText().toString()))
                     .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -56,15 +57,21 @@ public class SingUpActivity extends AppCompatActivity {
                                 startActivity(i);
 
 
-                            } else {
+                            }
+                            else {
                                 Log.e("Error", task.getException().toString());
                                 Toast.makeText(SingUpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                             }
                         }
                     });
         }
+        else Toast.makeText(SingUpActivity.this, "Please enter all the information", Toast.LENGTH_LONG).show();
+
     }
-
-
 }
+
+
+
+
+
 

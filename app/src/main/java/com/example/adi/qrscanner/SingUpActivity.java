@@ -37,38 +37,108 @@ public class SingUpActivity extends AppCompatActivity {
 
 
 
+
     }
+
     public void buttonSingUp_click(View v) {
         if (!(IdReg.getText().toString().isEmpty() || NameReg.getText().toString().isEmpty())) {
-            final ProgressDialog progressDialog = ProgressDialog.show(SingUpActivity.this, "Please wait...", "Procassing...", true);
-            (firebaseAuth.createUserWithEmailAndPassword(TextEmailReg.getText().toString(), TextPassReg.getText().toString()))
-                    .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            progressDialog.dismiss();
 
-                            if (task.isSuccessful()) {
-                                String id=ref.push().getKey();
-                                Users user=new Users(id,TextEmailReg.getText().toString(),TextPassReg.getText().toString(),IdReg.getText().toString(),NameReg.getText().toString());
-                                ref.child(id).setValue(user);
+           //if (inTerface(IdReg.getText().toString())) {
+               final ProgressDialog progressDialog = ProgressDialog.show(SingUpActivity.this, "Please wait...", "Processing...", true);
+               (firebaseAuth.createUserWithEmailAndPassword(TextEmailReg.getText().toString(), TextPassReg.getText().toString()))
+                       .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                           @Override
+                           public void onComplete(@NonNull Task<AuthResult> task) {
+                               progressDialog.dismiss();
 
-                                Toast.makeText(SingUpActivity.this, "SingUp Successful", Toast.LENGTH_LONG).show();
-                                Intent i = new Intent(SingUpActivity.this, loginActivity.class);
-                                startActivity(i);
+                               if (task.isSuccessful()) {
+                                   firebaseAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                       @Override
+                                       public void onComplete(@NonNull Task<Void> task) {
+                                           if (task.isSuccessful()) {
+                                               String id = ref.push().getKey();
+                                               Users user = new Users(id, TextEmailReg.getText().toString(), TextPassReg.getText().toString(), IdReg.getText().toString(), NameReg.getText().toString());
+                                               ref.child(id).setValue(user);
+
+                                               Toast.makeText(SingUpActivity.this, "SingUp successfully. Please check your email for verification", Toast.LENGTH_LONG).show();
+                                               Intent i = new Intent(SingUpActivity.this, loginActivity.class);
+                                               startActivity(i);
+                                           } else {
+                                               Toast.makeText(SingUpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                           }
+                                       }
+                                   });
 
 
-                            }
-                            else {
-                                Log.e("Error", task.getException().toString());
-                                Toast.makeText(SingUpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
+                               } else {
+                                   Log.e("Error", task.getException().toString());
+                                   Toast.makeText(SingUpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                               }
+                           }
+                       });
+          // }
+          // else Toast.makeText(this, "Please enter real id", Toast.LENGTH_SHORT).show();
         }
         else Toast.makeText(SingUpActivity.this, "Please enter all the information", Toast.LENGTH_LONG).show();
 
     }
+    public static boolean inTerface(String id) {
+        int sum, bikoret;
+
+
+        if(id.length()==9)
+        {
+            sum = idVerification(id);
+            bikoret = Character.getNumericValue(id.charAt(8));
+
+            if((sum+bikoret)%10==0)
+                return true;
+
+            else
+                return false;
+        }
+        else
+        {
+           return false;
+
+        }
+
+    }
+
+    public static int idVerification(String id) {
+        String a;
+        int sum=0, i, j, num;
+
+        for(i=0; i<8; i++)
+        {
+            if(i==0 || i%2==0)
+            {
+                num = Character.getNumericValue(id.charAt(i));
+                sum = sum+num;
+            }
+            else
+            {
+                num = Character.getNumericValue(id.charAt(i));
+                if((num*2)>10)
+                {
+                    a = Integer.toString(num*2);
+                    for(j=0; j<2; j++)
+                    {
+                        num = Character.getNumericValue(a.charAt(j));
+                        sum = sum+num;
+                    }
+                }
+                else
+                    sum = sum+(num*2);
+            }
+        }
+
+        return sum;
+    }
+
+
 }
+
 
 
 

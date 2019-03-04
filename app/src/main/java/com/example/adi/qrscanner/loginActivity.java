@@ -14,26 +14,37 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class loginActivity extends AppCompatActivity {
 
     private EditText TextEmailLog,TextPassLog;
     private FirebaseAuth firebaseAuth;
+    FirebaseUser firebaseUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
 
+        firebaseAuth=FirebaseAuth.getInstance();
+        firebaseUser=firebaseAuth.getCurrentUser();
+
+        if(firebaseUser != null && firebaseUser.isEmailVerified()){
+            Intent i = new Intent(loginActivity.this, UserHome.class);
+            startActivity(i);
+        }
+
+
 
         TextEmailLog=(EditText)findViewById(R.id.TextEmailLog);
         TextPassLog=(EditText)findViewById(R.id.TextPassLog);
 
-        firebaseAuth=FirebaseAuth.getInstance();
+
     }
 
     public void buttonLog_click (View v){
-        final ProgressDialog progressDialog=ProgressDialog.show(loginActivity.this,"Please wait...","Procassing...",true);
+        final ProgressDialog progressDialog=ProgressDialog.show(loginActivity.this,"Please wait...","Processing...",true);
         (firebaseAuth.signInWithEmailAndPassword(TextEmailLog.getText().toString(),TextPassLog.getText().toString()))
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -41,9 +52,15 @@ public class loginActivity extends AppCompatActivity {
                 progressDialog.dismiss();
 
                 if (task.isSuccessful()){
-                    Toast.makeText(loginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
-                    Intent i = new Intent(loginActivity.this, UserHome.class);
-                    startActivity(i);
+                    if (firebaseAuth.getCurrentUser().isEmailVerified()){
+                        Toast.makeText(loginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
+                        Intent i = new Intent(loginActivity.this, UserHome.class);
+                        startActivity(i);
+                    }
+                    else {
+                        Toast.makeText(loginActivity.this, "Please verify your email address", Toast.LENGTH_LONG).show();
+                    }
+
                 }
                 else {
                     Log.e("Error",task.getException().toString());
@@ -51,5 +68,13 @@ public class loginActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    public void forgot(View v){
+        Intent i = new Intent(loginActivity.this, ResetPasswordActivity.class);
+        startActivity(i);
+    }
+    public void aaaaa(View v){
+        Intent i = new Intent(loginActivity.this, SingUpActivity.class);
+        startActivity(i);
     }
 }

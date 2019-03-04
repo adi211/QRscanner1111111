@@ -7,25 +7,25 @@
     android:orientation="vertical"
     tools:context=".AddLocation">
 
-    <EditText
-        android:id="@+id/name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="Enter the location's name" />
+  <EditText
+      android:id="@+id/name"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:ems="10"
+      android:inputType="textPersonName"
+      android:hint="Enter the location's name" />
 
-    <EditText
-        android:id="@+id/address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Enter the location's address"
-        android:inputType="textPostalAddress" />
+  <EditText
+      android:id="@+id/address"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:ems="10"
+      android:hint="Enter the location's address"
+      android:inputType="textPostalAddress" />
 
-    <Button
-        android:onClick="create"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Create" />
+  <Button
+      android:onClick="create"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Create" />
 </LinearLayout>

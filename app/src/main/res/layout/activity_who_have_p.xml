@@ -3,22 +3,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".LoginOrSingup">
+    android:layout_height="match_parent"
+    tools:context=".WhoHaveP">
 
-    <Button
-        android:id="@+id/btnRegistration"
+    <SearchView
         android:layout_width="match_parent"
-        android:onClick="btnRegistration_Click"
         android:layout_height="wrap_content"
-        android:text="SingUp"
+        android:id="@+id/ser"/>
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="who have permission"
+        android:textSize="30dp" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/li"
         />
-
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="match_parent"
-        android:onClick="btnLogin_Click"
-        android:layout_height="wrap_content"
-        android:text="LogIn" />
 </LinearLayout>

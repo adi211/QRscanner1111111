@@ -3,9 +3,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".loginActivity">
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Login to WIIMB"
+        android:textSize="30dp" />
 
     <TextView
         android:id="@+id/textView3"
@@ -37,7 +45,21 @@
         android:id="@+id/buttonLog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:onClick="buttonLog_click"/>
+        android:onClick="buttonLog_click"
+        android:text="Login" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="aaaaa"
+        android:text="New at WIIMB? click to create an account" />
+
+    <Button
+        android:id="@+id/forgotPass"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="forgot"
+        android:text="Forgot Password" />
 
 </LinearLayout>

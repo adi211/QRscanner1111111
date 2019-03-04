@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -17,7 +18,7 @@ import com.google.firebase.database.ValueEventListener;
 public class AddLocation extends AppCompatActivity {
 
     EditText name, address;
-    DatabaseReference ref;
+    DatabaseReference ref,ref1;
     FirebaseAuth firebaseAuth;
 
     @Override
@@ -30,26 +31,31 @@ public class AddLocation extends AppCompatActivity {
 
         ref = FirebaseDatabase.getInstance().getReference();
         firebaseAuth = FirebaseAuth.getInstance();
+
+
+
+        ref1 = FirebaseDatabase.getInstance().getReference().child("Places");
     }
 
     public void create(View view) {
         final String n = name.getText().toString();
         final String a = address.getText().toString();
-        if (!n.isEmpty() && !a.isEmpty())
-        {
-            ref.child("Places").child(n).child("address").setValue(a);
-            final String email=firebaseAuth.getCurrentUser().getEmail();
-            ref.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+
+        if ((!n.isEmpty() && !a.isEmpty())) {
+
+            ref1.addListenerForSingleValueEvent(new ValueEventListener() {
+
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    for (DataSnapshot ds : dataSnapshot.getChildren())
-                    {
-                        Users u = ds.getValue(Users.class);
-                        if (u.getEmail().equals(email))
-                        {
-                            ref.child("Places").child(n).child("admins").child(u.getId()).setValue(u);
+                    boolean exist=false;
+                    for (DataSnapshot ds : dataSnapshot.getChildren()){
+                        if (ds.getKey().equals(n)){
+                            Toast.makeText(AddLocation.this, "this place have been created. Try another name", Toast.LENGTH_LONG).show();
+                            exist=true;
                         }
                     }
+                    if (!exist)
+                        addVal(n,a);
                 }
 
                 @Override
@@ -57,8 +63,64 @@ public class AddLocation extends AppCompatActivity {
 
                 }
             });
-            Intent t = new Intent(this, UserHome.class);
-            startActivity(t);
         }
     }
+
+
+
+
+
+
+
+
+
+    public void addVal(final String n,final String a){
+
+        ref.child("Places").child(n).child("address").setValue(a);
+        final String email=firebaseAuth.getCurrentUser().getEmail();
+        ref.child("Users").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren())
+                {
+                    Users u = ds.getValue(Users.class);
+                    if (u.getEmail().equals(email))
+                    {
+                        ref.child("Places").child(n).child("admins").child(u.getId()).setValue(u);
+                        Toast.makeText(AddLocation.this, "This place was created successfully. Now you can manage your place", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        Intent t = new Intent(this, UserHome.class);
+        startActivity(t);
+}
+/*
+    private boolean ifExist(final String st) {
+
+        final boolean[] a = new boolean[1];
+        ref.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()){
+                    Toast.makeText(AddLocation.this, ds.toString(), Toast.LENGTH_SHORT).show();
+                    if (ds.hasChild(st)){
+                        a[0] =true;
+                        return a[0];
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }*/
 }

@@ -7,62 +7,62 @@
     android:orientation="vertical"
     tools:context=".SingUpActivity">
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Email" />
+  <TextView
+      android:id="@+id/textView3"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Email" />
 
-    <EditText
-        android:id="@+id/TextEmailReg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textEmailAddress" />
+  <EditText
+      android:id="@+id/TextEmailReg"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:ems="10"
+      android:inputType="textEmailAddress" />
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="password" />
+  <TextView
+      android:id="@+id/textView4"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="password" />
 
-    <EditText
-        android:id="@+id/TextPassReg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPassword" />
+  <EditText
+      android:id="@+id/TextPassReg"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:ems="10"
+      android:inputType="textPassword" />
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ID" />
+  <TextView
+      android:id="@+id/textView"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="ID" />
 
-    <EditText
-        android:id="@+id/IdReg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number" />
+  <EditText
+      android:id="@+id/IdReg"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:ems="10"
+      android:inputType="number" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Name" />
+  <TextView
+      android:id="@+id/textView2"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="Name" />
 
-    <EditText
-        android:id="@+id/NameReg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName" />
+  <EditText
+      android:id="@+id/NameReg"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:ems="10"
+      android:inputType="textPersonName" />
 
-    <Button
-        android:id="@+id/buttonSingUp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="SingUp"
-        android:onClick="buttonSingUp_click"/>
+  <Button
+      android:id="@+id/buttonSingUp"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="SingUp"
+      android:onClick="buttonSingUp_click"/>
 </LinearLayout>

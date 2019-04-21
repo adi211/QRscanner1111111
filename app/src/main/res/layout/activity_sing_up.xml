@@ -7,62 +7,136 @@
     android:orientation="vertical"
     tools:context=".SingUpActivity">
 
-  <TextView
-      android:id="@+id/textView3"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="Email" />
 
-  <EditText
-      android:id="@+id/TextEmailReg"
+  <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:ems="10"
-      android:inputType="textEmailAddress" />
+      android:layout_height="match_parent"
+      android:gravity="center"
+      android:layout_weight="2"
+      android:orientation="vertical">
 
-  <TextView
-      android:id="@+id/textView4"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="password" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center">
 
-  <EditText
-      android:id="@+id/TextPassReg"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:ems="10"
-      android:inputType="textPassword" />
+      <TextView
+          android:id="@+id/textView17"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Sing up to "
+          android:textColor="#000"
+          android:textSize="30dp" />
 
-  <TextView
-      android:id="@+id/textView"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="ID" />
+    </LinearLayout>
 
-  <EditText
-      android:id="@+id/IdReg"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:ems="10"
-      android:inputType="number" />
+  </LinearLayout>
 
-  <TextView
-      android:id="@+id/textView2"
+  <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="Name" />
+      android:layout_height="match_parent"
+      android:orientation="horizontal"
+      android:gravity="center"
+      android:layout_weight="1">
 
-  <EditText
-      android:id="@+id/NameReg"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:ems="10"
-      android:inputType="textPersonName" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-  <Button
-      android:id="@+id/buttonSingUp"
+      <TextView
+          android:id="@+id/textView3"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Email" />
+
+      <EditText
+          android:id="@+id/TextEmailReg"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:ems="10"
+          android:inputType="textEmailAddress" />
+
+      <TextView
+          android:id="@+id/textView4"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="password" />
+
+      <EditText
+          android:id="@+id/TextPassReg"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:ems="10"
+          android:inputType="textPassword" />
+
+      <TextView
+          android:id="@+id/textView"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="ID" />
+
+      <EditText
+          android:id="@+id/IdReg"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:ems="10"
+          android:inputType="number" />
+
+      <TextView
+          android:id="@+id/textView2"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:text="Name" />
+
+      <EditText
+          android:id="@+id/NameReg"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:ems="10"
+          android:inputType="textPersonName" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+      <ImageButton
+          android:id="@+id/SelIMa"
+          android:layout_width="170dp"
+          android:layout_height="170dp"
+          android:adjustViewBounds="true"
+          android:scaleType="centerCrop"
+          app:srcCompat="@drawable/camera" />
+
+    </LinearLayout>
+
+  </LinearLayout>
+
+  <LinearLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:text="SingUp"
-      android:onClick="buttonSingUp_click"/>
+      android:layout_height="match_parent"
+      android:orientation="vertical"
+      android:gravity="bottom|end"
+      android:layout_weight="2">
+
+
+
+    <com.getbase.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fab_colorNormal="#C51010"
+        app:fab_colorPressed="#C51010"
+        app:fab_icon="@drawable/ic_action_done"
+        android:onClick="buttonSingUp_click"
+        app:fab_title="Credits" />
+
+  </LinearLayout>
+
 </LinearLayout>

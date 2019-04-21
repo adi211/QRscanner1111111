@@ -2,6 +2,9 @@ package com.example.adi.qrscanner;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.zxing.Result;
 
@@ -10,15 +13,13 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 public class ScanCodeActivity extends AppCompatActivity implements ZXingScannerView.ResultHandler {
 
   ZXingScannerView ScannerView;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     ScannerView=new ZXingScannerView(this);
     setContentView(R.layout.activity_scan_code);
     setContentView(ScannerView);
-
-
-
 
 
   }

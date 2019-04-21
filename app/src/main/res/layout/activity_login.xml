@@ -5,15 +5,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".loginActivity">
+    tools:context=".loginActivity"
+    android:gravity="right">
 
-    <TextView
-        android:id="@+id/textView12"
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="Login to WIIMB"
-        android:textSize="30dp" />
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:text="Login to "
+            android:textColor="#000"
+            android:textSize="30dp" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView3"
@@ -43,23 +57,37 @@
 
     <Button
         android:id="@+id/buttonLog"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/custum_button"
         android:onClick="buttonLog_click"
-        android:text="Login" />
+        android:text="Login"
+        android:textColor="#000" />
 
-    <Button
-        android:id="@+id/button3"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="aaaaa"
-        android:text="New at WIIMB? click to create an account" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-    <Button
-        android:id="@+id/forgotPass"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="forgot"
-        android:text="Forgot Password" />
+        <TextView
+            android:id="@+id/forgotPass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="forgot"
+            android:text="Forgot Password"
+            android:textColor="#C51010"
+            android:padding="10dp"
+            />
+
+        <TextView
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="aaaaa"
+            android:text="New at WIIMB? click to create an account"
+            android:textColor="#000"
+            android:padding="10dp"/>
+    </LinearLayout>
 
 </LinearLayout>

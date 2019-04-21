@@ -1,8 +1,13 @@
 package com.example.adi.qrscanner;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -15,12 +20,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class WhoInB extends AppCompatActivity {
+public class WhoInB extends AppCompatActivity implements AdapterView.OnItemClickListener {
     ListView ListW;
     ArrayList<String> list;
     DatabaseReference ref;
     SearchView searchBar;
-    String query;
+    String query,email;
 
 
     @Override
@@ -50,6 +55,8 @@ public class WhoInB extends AppCompatActivity {
             }
         });
 
+        ListW.setOnItemClickListener(this);
+
 
 
         refreshList11();
@@ -63,7 +70,7 @@ public class WhoInB extends AppCompatActivity {
                 list.clear();
                 for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()){
                     Users u = dataSnapshot1.getValue(Users.class);
-                    String name = u.getName();
+                    String name = u.getEmail();
                     if (isInSearch(name))
                      list.add(name);
                 }
@@ -83,5 +90,19 @@ public class WhoInB extends AppCompatActivity {
     {
         return st.toLowerCase().contains(query.toLowerCase());
     }
+
+    @Override
+    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+        email=list.get(i);
+
+
+        Intent j = new Intent(WhoInB.this, ShowProfile.class);
+        j.putExtra("email",email);
+        startActivity(j);
+
+    }
+
+
+
 
 }

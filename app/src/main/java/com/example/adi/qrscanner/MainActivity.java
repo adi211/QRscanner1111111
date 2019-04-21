@@ -1,15 +1,23 @@
 package com.example.adi.qrscanner;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,14 +34,17 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    public static TextView resultTV,tv;
+    public static TextView tv,showUP,resultTV;
     Button scan_btn,add;
     private FirebaseAuth firebaseAuth;
     String a, location;
-    DatabaseReference ref,refU;
+    DatabaseReference ref,refU,ref2;
     ListView list;
     List<Request> requestList;
     ArrayList<String> list1;
+    String em;
+
+
 
 
     @Override
@@ -41,11 +52,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        resultTV=(TextView)findViewById(R.id.result_text);
+        resultTV=findViewById(R.id.result_text);
         scan_btn=(Button) findViewById(R.id.btn_scan);
         tv=(TextView)findViewById(R.id.textView5);
         add=(Button) findViewById(R.id.add);
         list = (ListView) findViewById(R.id.list);
+        showUP=findViewById(R.id.showUP);
         firebaseAuth=FirebaseAuth.getInstance();
 
         list.setOnItemClickListener(this);
@@ -53,7 +65,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         requestList = new ArrayList<>();
         location = getIntent().getStringExtra("location");
         //a=firebaseAuth.getCurrentUser().getEmail();
-        tv.setText("Welcome to "+location.toUpperCase()+" menager page");
+
+        int i=location.length();
+        Spannable wordtoSpan = new SpannableString(location.toUpperCase()+" manager page");
+        wordtoSpan.setSpan(new ForegroundColorSpan(0xFFC51010), 0, i, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        wordtoSpan.setSpan(new ForegroundColorSpan(Color.BLACK), i, i+13, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        tv.setText(wordtoSpan);
+
 
         ref = FirebaseDatabase.getInstance().getReference().child("Places");
         refU=FirebaseDatabase.getInstance().getReference().child("Users");
@@ -62,6 +81,37 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getApplicationContext(),ScanCodeActivity.class));
+            }
+        });
+
+
+
+
+        ref2 = FirebaseDatabase.getInstance().getReference().child("Users");
+        showUP.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                    em=resultTV.getText().toString();
+
+                    ref2.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                Users u = ds.getValue(Users.class);
+                                if (u.getEmail().equals(em)){
+                                    Intent j = new Intent(MainActivity.this, ShowProfile.class);
+                                    j.putExtra("email",em);
+                                    startActivity(j);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
             }
         });
 
@@ -190,6 +240,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         final String id = ref.push().getKey();
         final String email = firebaseAuth.getCurrentUser().getEmail();
 
+
         adb.setPositiveButton("Accept", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
@@ -207,11 +258,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         });
 
-        adb.setNeutralButton("Cancel", new DialogInterface.OnClickListener() {
+        adb.setNeutralButton("show user profile" , new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
+                Intent j = new Intent(MainActivity.this, ShowProfile.class);
+                j.putExtra("email",request.getEmail());
+                startActivity(j);
             }
+
         });
 
         AlertDialog ad = adb.create();
@@ -224,4 +278,89 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         i.putExtra("location",loc);
         startActivity(i);
     }
+
+
+
+
+
+
+
+
+
+    public void cyp(View v){
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        adb.setMessage("Do you want to delete your place?");
+
+
+
+        adb.setPositiveButton("delete my place", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                ref.child(location).removeValue();
+                Intent j = new Intent(MainActivity.this, UserHome.class);
+                startActivity(j);
+                dialogInterface.dismiss();
+            }
+        });
+        adb.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        adb.show();
+
+    }
+
+    public void cr(View v){
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        adb.setMessage("Do you want to delete your requests?");
+
+
+
+        adb.setPositiveButton("delete requests", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                ref.child(location).child("requests").removeValue();
+                dialogInterface.dismiss();
+            }
+        });
+        adb.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+
+        adb.show();
+
+
+    }
+
+    public void arm(View v){
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        adb.setMessage("Enter user email that do you want to add/remove from your building");
+        final EditText input = new EditText(MainActivity.this);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        input.setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
+        input.setLayoutParams(lp);
+        adb.setView(input);
+
+        adb.setPositiveButton("Add", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+                if (!input.getText().toString().equals(null)){
+                    resultTV.setText(input.getText().toString());
+                }
+                dialogInterface.dismiss();
+            }
+        });
+        adb.show();
+
+    }
+
+
+
 }

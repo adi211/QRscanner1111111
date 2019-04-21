@@ -1,6 +1,7 @@
 package com.example.adi.qrscanner;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,7 @@ public class WhoHaveP extends AppCompatActivity implements AdapterView.OnItemCli
     DatabaseReference ref,ref1;
     SearchView searchBar;
     String query;
+    String email;
 
 
     @Override
@@ -89,6 +91,7 @@ public class WhoHaveP extends AppCompatActivity implements AdapterView.OnItemCli
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         final int position=i;
+        email=list.get(i);
         AlertDialog.Builder adb = new AlertDialog.Builder(this);
         adb.setMessage("Do you want to cancel permission for this user?");
         adb.setNeutralButton("Cancel permission", new DialogInterface.OnClickListener() {
@@ -102,6 +105,14 @@ public class WhoHaveP extends AppCompatActivity implements AdapterView.OnItemCli
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
+            }
+        });
+        adb.setNegativeButton("show user profile" , new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Intent j = new Intent(WhoHaveP.this, ShowProfile.class);
+                j.putExtra("email",email);
+                startActivity(j);
             }
         });
         adb.show();

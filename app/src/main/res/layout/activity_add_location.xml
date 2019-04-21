@@ -5,7 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".AddLocation">
+    tools:context=".AddLocation"
+    android:gravity="center_horizontal">
+
+  <TextView
+      android:id="@+id/textView18"
+      android:layout_width="wrap_content"
+      android:textSize="30dp"
+      android:textColor="#000"
+      android:layout_height="wrap_content"
+      android:text="Add location" />
 
   <EditText
       android:id="@+id/name"
@@ -27,5 +36,7 @@
       android:onClick="create"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
+      android:background="@drawable/custum_button"
       android:text="Create" />
+
 </LinearLayout>

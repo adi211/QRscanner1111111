@@ -1,42 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center_horizontal"
     tools:context=".UserHome">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.75"
-        android:text="WIIMB"
-        android:gravity="center"
-        android:textSize="35dp"/>
 
-    <WebView
-        android:id="@+id/wb"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="5"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="8dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    </WebView>
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="25dp" />
 
-    <Button
-        android:id="@+id/button4"
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="WIIMB"
+            android:textStyle="bold"
+            android:textColor="#C51010"
+            android:textSize="35dp" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="aaa"
-        android:text="Search/Manage place" />
-
-    <Button
-        android:onClick="addLocation"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="Add location" />
+        android:gravity="center"
+        android:orientation="vertical"
+        >
 
-</LinearLayout>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="40dp" />
+
+        <WebView
+            android:id="@+id/wb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp">
+
+        </WebView>
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="10dp" />
+
+        <Button
+            android:id="@+id/button4"
+            android:background="@drawable/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#C51010"
+            android:onClick="aaa"
+            android:text="  Search/Manage place  " />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="5dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/custum_button"
+            android:onClick="addLocation"
+            android:textColor="#000"
+            android:text="  Add location  " />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="bottom|end"
+        android:orientation="horizontal">
+
+        <com.getbase.floatingactionbutton.FloatingActionsMenu
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fab_addButtonColorNormal="#C51010"
+            app:fab_addButtonColorPressed="#C51010"
+            app:fab_addButtonPlusIconColor="#FFF"
+            app:fab_labelStyle="@style/custumeFab">
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_colorNormal="#000"
+                app:fab_colorPressed="#000"
+                app:fab_icon="@drawable/ic_action_logout"
+                app:fab_size="mini"
+                app:fab_title="LogOut" />
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_colorNormal="#C51010"
+                app:fab_colorPressed="#C51010"
+                app:fab_icon="@drawable/ic_action_credits"
+                app:fab_size="mini"
+                app:fab_title="Credits" />
+
+            <com.getbase.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fab13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:fab_colorNormal="#000"
+                app:fab_colorPressed="#000"
+                app:fab_icon="@drawable/ic_action_camera"
+                app:fab_size="mini"
+                app:fab_title="Change profile picture" />
+
+
+        </com.getbase.floatingactionbutton.FloatingActionsMenu>
+    </LinearLayout>
+
+
+</RelativeLayout>

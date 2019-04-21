@@ -1,14 +1,13 @@
 package com.example.adi.qrscanner;
 
 public class Users{
-  public String id,email,password,userID,name;
-
-  public Users(String id, String email, String password, String userID, String name) {
+  public String id,email,password,userID,name,imageUrl;
+  public Users(String id, String email, String url, String userID, String name) {
     this.id = id;
     this.email = email;
-    this.password = password;
     this.userID = userID;
     this.name = name;
+    this.imageUrl=url;
   }
 
   public Users() {
@@ -30,13 +29,6 @@ public class Users{
     this.email = email;
   }
 
-  public String getPassword() {
-    return password;
-  }
-
-  public void setPassword(String password) {
-    this.password = password;
-  }
 
   public String getUserID() {
     return userID;
@@ -52,5 +44,14 @@ public class Users{
 
   public void setName(String name) {
     this.name = name;
+  }
+
+
+  public String getImageUrl() {
+    return imageUrl;
+  }
+
+  public void setImageUrl(String imageUrl) {
+    this.imageUrl = imageUrl;
   }
 }
